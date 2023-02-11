@@ -21,6 +21,16 @@ class PlayerController extends GetxController {
     checkPermission();
   }
 
+  Future<List<SongModel>> refreshSongs() async {
+    List<SongModel> songs = await audioQuery.querySongs(
+      ignoreCase: true,
+      orderType: OrderType.ASC_OR_SMALLER,
+      sortType: null,
+      uriType: UriType.EXTERNAL,
+    );
+    return songs;
+  }
+
   autoPlayNext(List songs) {
     audioPlayer.positionStream.listen((p) {
       if (p.compareTo(audioPlayer.duration ?? const Duration(seconds: 1)) ==

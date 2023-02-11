@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mellow_songs/consts/colors.dart';
@@ -9,9 +7,14 @@ import 'package:mellow_songs/controllers/player_controller.dart';
 import 'package:mellow_songs/views/player.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     PlayerController controller = Get.put(PlayerController());
@@ -22,9 +25,12 @@ class Home extends StatelessWidget {
         backgroundColor: AppColor.bgDarkColor,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              songs = await controller.refreshSongs();
+              setState(() {});
+            },
             icon: const Icon(
-              Icons.search,
+              Icons.refresh,
               color: AppColor.whiteColor,
             ),
           )
